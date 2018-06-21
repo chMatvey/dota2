@@ -28,3 +28,8 @@ hs_err_pid*
 #intellij idea
 /.idea
 /dota2.iml
+
+#gitignore
+/.gitignore
+
+#\src\main\resources\application.properties
