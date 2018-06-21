@@ -24,3 +24,7 @@ hs_err_pid*
 
 #maven
 /target
+
+#intellij idea
+/.idea
+/dota2.iml
