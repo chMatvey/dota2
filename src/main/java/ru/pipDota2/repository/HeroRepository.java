@@ -7,7 +7,6 @@ import ru.pipDota2.domain.Hero;
 import java.util.List;
 
 public interface HeroRepository extends CrudRepository<Hero, Integer>{
-
     @Override
     <S extends Hero> Iterable<S> save(Iterable<S> iterable);
 
