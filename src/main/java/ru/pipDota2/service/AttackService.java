@@ -7,5 +7,7 @@ public interface AttackService {
 
     public Attack getAttackById(int id);
 
+    public Attack getAttackByName(String name);
+
     public int getIdAttack(String name);
 }

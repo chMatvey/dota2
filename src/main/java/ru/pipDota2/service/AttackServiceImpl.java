@@ -25,6 +25,11 @@ public class AttackServiceImpl implements AttackService {
     }
 
     @Override
+    public Attack getAttackByName(String name) {
+        return repository.findFirstByName(name);
+    }
+
+    @Override
     public int getIdAttack(String name) {
         if (name.equals("melee")){
             return 1;

@@ -9,4 +9,6 @@ public interface TypeRepository extends CrudRepository<Type, Integer> {
 
     @Override
     Type findOne(Integer id);
+
+    Type findFirstByImg(String img);
 }

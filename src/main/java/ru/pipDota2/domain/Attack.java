@@ -6,7 +6,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @RequiredArgsConstructor(staticName = "of")
@@ -19,7 +18,4 @@ public class Attack {
 
     @NonNull
     private String name;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "attacks")
-    private List<Hero> heroes;
 }

@@ -23,12 +23,12 @@ public class Hero {
     private String img;
 
     @NonNull
-    @ManyToOne
-    @JoinColumn(name = "attack_id")
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "attack_id", nullable = false)
     private Attack attack;
 
     @NonNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "type_id", nullable = false)
     private Type type;
 }

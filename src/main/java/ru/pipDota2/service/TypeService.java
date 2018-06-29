@@ -7,5 +7,7 @@ public interface TypeService {
 
     public Type getTypeById(int id);
 
+    public Type getTypeByImg(String img);
+
     public int getTypeId(String name);
 }

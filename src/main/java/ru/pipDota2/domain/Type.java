@@ -20,7 +20,4 @@ public class Type {
 
     @NonNull
     private String img;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "types")
-    private List<Hero> heroes;
 }

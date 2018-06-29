@@ -25,6 +25,11 @@ public class TypeServiceImpl implements TypeService{
     }
 
     @Override
+    public Type getTypeByImg(String img) {
+        return repository.findFirstByImg(img);
+    }
+
+    @Override
     public int getTypeId(String name) {
         if (name.equals("/img/icon-str.png")){
             return 1;

@@ -9,4 +9,6 @@ public interface AttackRepository extends CrudRepository<Attack, Integer> {
 
     @Override
     Attack findOne(Integer id);
+
+    Attack findFirstByName(String name);
 }
