@@ -3,6 +3,7 @@ package ru.pipDota2.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.pipDota2.domain.Hero;
+import ru.pipDota2.domain.Type;
 import ru.pipDota2.repository.HeroRepository;
 
 import java.util.List;
@@ -27,8 +28,17 @@ public class HeroServiceImpl implements HeroService{
     }
 
     @Override
-    public List<Hero> getHeroesLimitOffset(int limit, int offset) {
+    public Iterable<Hero> getHeroesLimitOffset(int limit, int offset) {
         return repository.findAllLimitOffset(limit, offset);
     }
 
+    @Override
+    public Iterable<Hero> getHeroesByTypeLimitOffset(int typeId, int limit, int offset) {
+        return repository.findAllByType(typeId, limit, offset);
+    }
+
+    @Override
+    public Iterable<Hero> getHeroesByNameLike(String name, int limit, int offset) {
+        return repository.findAllByNameLike(name + "%", limit, offset);
+    }
 }
