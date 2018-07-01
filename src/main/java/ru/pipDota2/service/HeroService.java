@@ -8,8 +8,6 @@ import java.util.List;
 public interface HeroService {
     public boolean saveHero(Iterable<Hero> heroes);
 
-    public Iterable<Hero> getHeroes();
-
     public Iterable<Hero> getHeroesLimitOffset(int limit, int offset);
 
     public Iterable<Hero> getHeroesByTypeLimitOffset(int typeId, int limit, int offset);

@@ -11,9 +11,6 @@ public interface HeroRepository extends CrudRepository<Hero, Integer>{
     @Override
     <S extends Hero> Iterable<S> save(Iterable<S> iterable);
 
-    @Override
-    Iterable<Hero> findAll();
-
     @Query(value = "SELECT * FROM heroes LIMIT ?1 OFFSET ?2", nativeQuery = true)
     Iterable<Hero> findAllLimitOffset(int limit, int offset);
 

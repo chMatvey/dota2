@@ -23,11 +23,6 @@ public class HeroServiceImpl implements HeroService{
     }
 
     @Override
-    public Iterable<Hero> getHeroes() {
-        return repository.findAll();
-    }
-
-    @Override
     public Iterable<Hero> getHeroesLimitOffset(int limit, int offset) {
         return repository.findAllLimitOffset(limit, offset);
     }

@@ -5,15 +5,13 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @RequiredArgsConstructor(staticName = "of")
 @NoArgsConstructor
-@Entity(name = "subjects")
+@Entity(name = "Subject")
+@Table(name = "subject")
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +24,17 @@ public class Subject {
     private String img;
 
     @NonNull
-    private int price;
+    private String price;
 
     @NonNull
+    @Column(length = 1000)
     private String description;
 
     @NonNull
     private String history;
+
+//    @NonNull
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "section_id")
+//    private Section section;
 }
