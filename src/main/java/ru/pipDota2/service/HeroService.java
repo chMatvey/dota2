@@ -13,4 +13,6 @@ public interface HeroService {
     public Iterable<Hero> getHeroesByTypeLimitOffset(int typeId, int limit, int offset);
 
     public Iterable<Hero> getHeroesByNameLike(String name, int limit, int offset);
+
+    public Hero getHeroById(int id);
 }

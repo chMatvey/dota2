@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.pipDota2.domain.*;
-import ru.pipDota2.service.AttackServiceImpl;
-import ru.pipDota2.service.HeroServiceImpl;
-import ru.pipDota2.service.SectionServiceImpl;
-import ru.pipDota2.service.TypeServiceImpl;
+import ru.pipDota2.service.*;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -24,16 +21,19 @@ public class LoadDataToDBController {
     private final AttackServiceImpl attackService;
     private final TypeServiceImpl typeService;
     private final SectionServiceImpl sectionService;
+    private final CharacteristicServiceImpl characteristicService;
 
     @Autowired
     public LoadDataToDBController(final HeroServiceImpl heroService,
                                   final AttackServiceImpl attackService,
                                   final TypeServiceImpl typeService,
-                                  final SectionServiceImpl sectionService){
+                                  final SectionServiceImpl sectionService,
+                                  final CharacteristicServiceImpl characteristicService){
         this.heroService = heroService;
         this.attackService = attackService;
         this.typeService = typeService;
         this.sectionService = sectionService;
+        this.characteristicService = characteristicService;
     }
 
     @GetMapping("/load/heroes")
@@ -45,7 +45,7 @@ public class LoadDataToDBController {
         typeService.saveType(Type.of("/img/icon-int.png"));
         JSONParser parser = new JSONParser();
         JSONArray array = (JSONArray) parser.parse(new FileReader
-                ("E:\\project\\java\\couseworks\\dota2\\src\\main\\resources\\heroesAll.json"));
+                ("E:\\project\\java\\couseworks\\dataForDota2\\heroesAll.json"));
         List<Hero> heroes = new ArrayList<Hero>();
         for (Object object : array) {
             JSONObject data = (JSONObject) object;
@@ -72,7 +72,7 @@ public class LoadDataToDBController {
         JSONParser parser = new JSONParser();
         for (int i = 0; i < name.length; i++){
             JSONArray array = (JSONArray) parser.parse(new FileReader
-                    ("E:\\project\\java\\couseworks\\dota2\\src\\main\\resources\\subjects\\" + name[i] + ".json"));
+                    ("E:\\project\\java\\couseworks\\dataForDota2\\" + name[i] + ".json"));
             Section section = Section.of(name[i], img[i]);
             for (Object object : array) {
                 JSONObject data = (JSONObject) object;
@@ -99,5 +99,130 @@ public class LoadDataToDBController {
         } else {
             return "error";
         }
+    }
+
+    private List<Skill> getSkills(String nameHero) throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        JSONArray skills = (JSONArray) parser.parse(new FileReader
+                ("E:\\project\\java\\couseworks\\dataForDota2\\skills.json"));
+        List<Skill> list = new ArrayList<>();
+        for (Object object : skills) {
+            JSONObject dataForSkill = (JSONObject) object;
+            String name = (String)dataForSkill.get("owner");
+            if (name.equals(nameHero)){
+                list.add(Skill.of(
+                        (String)dataForSkill.get("name"),
+                        (String)dataForSkill.get("img"),
+                        (String)dataForSkill.get("description")
+                ));
+            }
+        }
+        return list;
+    }
+
+    private List<Skill> getSkills(String nameHero, String description) throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        JSONArray skills = (JSONArray) parser.parse(new FileReader
+                ("E:\\project\\java\\couseworks\\dataForDota2\\skills.json"));
+        List<Skill> list = new ArrayList<>();
+        for (Object object : skills) {
+            JSONObject dataForSkill = (JSONObject) object;
+            String name = (String)dataForSkill.get("owner");
+            if (name.equals(nameHero)){
+                list.add(Skill.of(
+                        (String)dataForSkill.get("name"),
+                        (String)dataForSkill.get("img"),
+                        description
+                ));
+            }
+        }
+        return list;
+    }
+
+    @GetMapping("/load/characteristics")
+    public String loadCharacteristics() throws IOException, ParseException {
+
+        JSONParser parser = new JSONParser();
+        JSONArray info = (JSONArray) parser.parse(new FileReader
+                ("E:\\project\\java\\couseworks\\dataForDota2\\info.json"));
+        JSONArray stats = (JSONArray) parser.parse(new FileReader
+                ("E:\\project\\java\\couseworks\\dataForDota2\\stats.json"));
+        //List<Characteristic> characteristics = new ArrayList<>();
+
+        for (int i = 0; i < info.size(); i++) {
+            JSONObject dataForStat = (JSONObject)stats.get(i);
+            String nameHero = (String)dataForStat.get("name");
+            Stat stat = Stat.of(
+                    (String)dataForStat.get("level"),
+                    (String)dataForStat.get("damage"),
+                    (String)dataForStat.get("health"),
+                    (String)dataForStat.get("mana"),
+                    (String)dataForStat.get("defence"),
+                    (String)dataForStat.get("timeAttack"),
+                    (String)dataForStat.get("attackInSecond"),
+                    (String)dataForStat.get("vision"),
+                    (String)dataForStat.get("distanceAttack")
+            );
+            JSONObject dataForInfo = (JSONObject)info.get(i);
+            String name = (String)dataForInfo.get("name");
+            if (!name.equals(nameHero)){
+                return "sort error";
+            }
+            boolean result;
+            try{
+                result = characteristicService.saveCharacteristics(Characteristic.of(
+                        (String)dataForInfo.get("img"),
+                        (String)dataForInfo.get("bio"),
+                        (String)dataForInfo.get("video"),
+                        (String)dataForInfo.get("power"),
+                        (String)dataForInfo.get("agility"),
+                        (String)dataForInfo.get("intelligence"),
+                        (String)dataForInfo.get("damage"),
+                        (String)dataForInfo.get("defence"),
+                        (String)dataForInfo.get("speed"),
+                        (String)dataForInfo.get("ability1"),
+                        (String)dataForInfo.get("ability2"),
+                        (String)dataForInfo.get("ability3"),
+                        (String)dataForInfo.get("ability4"),
+                        stat,
+                        getSkills(nameHero),
+                        heroService.getHeroById(i+1)
+                ));
+            } catch (Exception e){
+                stat = Stat.of(
+                        (String)dataForStat.get("level"),
+                        (String)dataForStat.get("damage"),
+                        (String)dataForStat.get("health"),
+                        (String)dataForStat.get("mana"),
+                        (String)dataForStat.get("defence"),
+                        (String)dataForStat.get("timeAttack"),
+                        (String)dataForStat.get("attackInSecond"),
+                        (String)dataForStat.get("vision"),
+                        (String)dataForStat.get("distanceAttack")
+                );
+                result = characteristicService.saveCharacteristics(Characteristic.of(
+                        (String)dataForInfo.get("img"),
+                        "bio",
+                        (String)dataForInfo.get("video"),
+                        (String)dataForInfo.get("power"),
+                        (String)dataForInfo.get("agility"),
+                        (String)dataForInfo.get("intelligence"),
+                        (String)dataForInfo.get("damage"),
+                        (String)dataForInfo.get("defence"),
+                        (String)dataForInfo.get("speed"),
+                        (String)dataForInfo.get("ability1"),
+                        (String)dataForInfo.get("ability2"),
+                        (String)dataForInfo.get("ability3"),
+                        (String)dataForInfo.get("ability4"),
+                        stat,
+                        getSkills(nameHero, "description"),
+                        heroService.getHeroById(i+1)
+                ));
+            }
+            if(!result){
+                return "error";
+            }
+        }
+        return "data was loaded successes";
     }
 }

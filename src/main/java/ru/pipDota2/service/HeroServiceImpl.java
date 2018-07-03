@@ -36,4 +36,9 @@ public class HeroServiceImpl implements HeroService{
     public Iterable<Hero> getHeroesByNameLike(String name, int limit, int offset) {
         return repository.findAllByNameLike(name + "%", limit, offset);
     }
+
+    @Override
+    public Hero getHeroById(int id) {
+        return repository.findOne(id);
+    }
 }

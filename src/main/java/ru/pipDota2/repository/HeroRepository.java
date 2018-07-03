@@ -8,9 +8,6 @@ import ru.pipDota2.domain.Type;
 import java.util.List;
 
 public interface HeroRepository extends CrudRepository<Hero, Integer>{
-    @Override
-    <S extends Hero> Iterable<S> save(Iterable<S> iterable);
-
     @Query(value = "SELECT * FROM heroes LIMIT ?1 OFFSET ?2", nativeQuery = true)
     Iterable<Hero> findAllLimitOffset(int limit, int offset);
 
