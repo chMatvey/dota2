@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService{
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<Role> list = new ArrayList<Role>();

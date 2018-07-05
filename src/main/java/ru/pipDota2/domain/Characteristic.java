@@ -6,12 +6,14 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "characteristics")
+@Entity(name = "Characteristics")
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor(staticName = "of")
+@Table(name = "characteristics")
 public class Characteristic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,4 +73,18 @@ public class Characteristic {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "hero_id")
     private Hero hero;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "characteristic_id")
+    private List<Comment> comments = new ArrayList<>();
+
+    public void addComment(Comment comment){
+        this.comments.add(comment);
+        //comment.setCharacteristic(this);
+    }
+
+    public void removeComment(Comment comment){
+        this.comments.remove(comment);
+        //comment.setCharacteristic(null);
+    }
 }
