@@ -1,24 +1,49 @@
 package ru.pipDota2.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor(staticName = "of")
 @NoArgsConstructor
-@Builder(toBuilder = true)
+@Entity(name = "users")
 public class User implements UserDetails{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @NonNull
+    @Column(unique = true)
     private String username;
+
+    @NonNull
+    @JsonIgnore
     private String password;
+
+    @NonNull
+    @ElementCollection(targetClass = Role.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "user_role")
+    @Column(name = "role")
     private List<Role> authorities;
+
+    @NonNull
+    @JsonIgnore
     private boolean accountNonExpired;
+
+    @NonNull
+    @JsonIgnore
     private boolean accountNonLocked;
+
+    @NonNull
+    @JsonIgnore
     private boolean credentialsNonExpired;
+
+    @NonNull
+    @JsonIgnore
     private boolean enabled;
 }

@@ -1,6 +1,5 @@
 package ru.pipDota2.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -8,26 +7,22 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity(name = "Comment")
 @Data
-@NoArgsConstructor
 @RequiredArgsConstructor(staticName = "of")
-@Table(name = "comment")
-public class Comment {
+@NoArgsConstructor
+@Entity(name = "Memes")
+@Table(name = "memes")
+public class Mem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Lob
     @NonNull
-    private String content;
+    private byte[] img;
 
     @NonNull
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-//    @JsonIgnore
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "characteristic_id")
-//    private Characteristic characteristic;
 }

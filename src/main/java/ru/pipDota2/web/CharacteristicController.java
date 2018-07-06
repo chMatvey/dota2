@@ -1,6 +1,7 @@
 package ru.pipDota2.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,20 +12,24 @@ import ru.pipDota2.repository.CommentRepository;
 import ru.pipDota2.service.CharacteristicServiceImpl;
 import ru.pipDota2.service.CommentServiceImpl;
 import ru.pipDota2.service.HeroServiceImpl;
+import ru.pipDota2.service.UserService;
 
 @RestController
 public class CharacteristicController {
     private final CharacteristicServiceImpl characteristicService;
     private final HeroServiceImpl heroService;
     private final CommentServiceImpl commentService;
+    private final UserService userService;
 
     @Autowired
     public CharacteristicController(final CharacteristicServiceImpl characteristicService,
                                     final HeroServiceImpl heroService,
-                                    final CommentServiceImpl commentService){
+                                    final CommentServiceImpl commentService,
+                                    final UserService userService){
         this.characteristicService = characteristicService;
         this.heroService = heroService;
         this.commentService = commentService;
+        this.userService = userService;
     }
 
     @GetMapping("/get/characteristic")
@@ -34,9 +39,12 @@ public class CharacteristicController {
 
     @GetMapping("/add/comment")
     public Characteristic addCommentToCharacteristic(@RequestParam("charact_id") int charactId,
+                                                     @RequestParam("user_id") int userId,
                                                      @RequestParam("content") String content){
         Characteristic characteristic = characteristicService.getById(charactId);
-        characteristic.addComment(Comment.of(content));
+        characteristic.addComment(Comment.of(content,
+                userService.getUserById(userId).orElseThrow(() ->
+                new UsernameNotFoundException("user with id: " + userId + " was not found"))));
         characteristicService.saveCharacteristics(characteristic);
         return characteristic;
     }
