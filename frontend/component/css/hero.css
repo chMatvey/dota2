@@ -1,0 +1,25 @@
+.second-header-hero{
+    background-color: #2c3036;
+    height: 10%;
+    width: 95%;
+    margin: 0 auto;
+    background: url("https://get.wallhere.com/photo/video-games-collage-Dota-2-Carnival-ART-festival-psychedelic-art-208769.jpg") no-repeat center top;
+}
+
+.filter{
+    width: 90%;
+    margin: 1% auto;
+    display: flex;
+    flex: auto;
+}
+
+.filter .search-by-name{
+    max-width: 84%;
+    flex: auto;
+}
+
+.select-type{
+    flex: auto;
+    max-width: 14%;
+    min-width: 14%;
+}

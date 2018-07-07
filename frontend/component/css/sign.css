@@ -1,0 +1,12 @@
+.login-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 5% auto;
+    max-width: 60%;
+    min-height: 60%;
+}
+
+.padding-top{
+
+}

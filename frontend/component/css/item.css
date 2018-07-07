@@ -1,0 +1,47 @@
+.item-page{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.item-content{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.item-display-flex{
+    display: flex;
+    padding: 2%;
+}
+
+.item-top h4{
+    padding-right: 1%;
+}
+
+.item-name-and-price{
+    padding-left: 2%;
+}
+
+.gold-img{
+    padding-left: 10%;
+    padding-right: 3%;
+    padding-top: 6%;
+    height: 100%;
+}
+
+@media (min-width: 1217px) {
+    .item-em{
+        padding: 5%;
+        margin: 0 auto;
+    }
+
+    .item-padding{
+        padding-top: 5%;
+    }
+}
+
+@media (min-width: 828px) {
+    .item-page{
+        background: url("https://media.alienwarearena.com/media/Dota2_Dashboard_BG.jpg") no-repeat center top;
+    }
+}

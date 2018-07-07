@@ -1,0 +1,25 @@
+.home-page{
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.home-content{
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    max-width: 1920px;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-iframe{
+    margin: 3% auto;
+    width: 50%;
+    min-width: 550px;
+    min-height: 400px;
+}
+
+.home-title{
+    margin: 0 auto;
+}

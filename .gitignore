@@ -29,8 +29,6 @@ hs_err_pid*
 /.idea
 /dota2.iml
 
-#gitignore
-/.gitignore
-
-#properties
-/src/main/resources/application.properties
+#npm
+/node_modules
+/package-lock.json

@@ -1,0 +1,35 @@
+body, html{
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+}
+
+ul, li{
+    display: flex;
+}
+
+.main-header{
+    width: 100%;
+}
+
+.content-table{
+    width: 90%;
+    margin: 0 auto;
+    height: 100%;
+}
+
+@media (min-width: 1217px) {
+
+}
+
+@media (max-width: 1217px) and (min-width: 828px) {
+    .hidden-1217 {
+        visibility: hidden;
+    }
+}
+
+@media (max-width: 828px) {
+    .hidden-1217 {
+        visibility: hidden;
+    }
+}

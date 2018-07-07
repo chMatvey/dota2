@@ -1,0 +1,59 @@
+.charact-comment{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media (min-width: 1217px) {
+    .display-flex{
+        display: flex;
+    }
+
+    .flex-direction-column{
+        flex-direction: column;
+    }
+
+    .table-hero-info-left{
+        width: 70%;
+    }
+
+    .table-hero-info-middle{
+        margin-left: -20%;
+    }
+
+    .hero-info-right{
+        width: 40%;
+    }
+
+    .hero-characteristics{
+        width: 95%;
+    }
+
+    .hero-history{
+        width: 95%;
+    }
+
+    .hero-info-img{
+        margin: 0 10%;
+    }
+}
+
+@media (max-width: 1217px) and (min-width: 828px) {
+    .hero-info-img{
+        margin: 0 35%;
+    }
+}
+
+@media (max-width: 828px) {
+    .hero-info-img{
+        margin: 0 30%;
+    }
+}
+
+.comment-head{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+

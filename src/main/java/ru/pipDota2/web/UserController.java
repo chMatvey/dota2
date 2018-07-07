@@ -3,16 +3,13 @@ package ru.pipDota2.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.pipDota2.domain.User;
 import ru.pipDota2.service.UserService;
 import ru.pipDota2.web.forms.Error;
 import ru.pipDota2.web.forms.Result;
 import ru.pipDota2.web.forms.Success;
-import sun.plugin.liveconnect.SecurityContextHelper;
 
 @RestController
 public class UserController {
