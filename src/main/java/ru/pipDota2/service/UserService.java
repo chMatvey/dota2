@@ -12,6 +12,7 @@ import ru.pipDota2.domain.User;
 import ru.pipDota2.repository.UserRepository;
 
 import javax.annotation.PostConstruct;
+import javax.jws.soap.SOAPBinding;
 import java.util.Optional;
 
 @Service
@@ -29,30 +30,32 @@ public class UserService implements UserDetailsService{
             repository.save(User.of(
                     "user",
                     new BCryptPasswordEncoder().encode("user"),
-                    ImmutableList.of(Role.USER),
-                    true,
-                    true,
-                    true,
-                    true
+                    Role.USER
             ));
         }
         if (!repository.findByUsername("admin").isPresent()){
             repository.save(User.of(
                     "admin",
                      new BCryptPasswordEncoder().encode("admin!"),
-                    ImmutableList.of(Role.ADMIN),
-                    true,
-                    true,
-                    true,
-                    true
+                    Role.ADMIN
             ));
         }
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByUsername(username).orElseThrow(() ->
-        new UsernameNotFoundException("user" + username + " was not found"));
+        User user = repository.findByUsername(username).orElseThrow(() ->
+                new UsernameNotFoundException("user" + username + " was not found"));
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                ImmutableList.of(user.getRole())
+        );
+    }
+
+    public Optional<User> findUserByName(String username){
+        return repository.findByUsername(username);
     }
 
     public Optional<User> getUserById(int id){

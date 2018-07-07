@@ -28,15 +28,4 @@ public class AttackServiceImpl implements AttackService {
     public Attack getAttackByName(String name) {
         return repository.findFirstByName(name);
     }
-
-    @Override
-    public int getIdAttack(String name) {
-        if (name.equals("melee")){
-            return 1;
-        } else if(name.equals("range")){
-            return 2;
-        } else {
-            throw new IllegalArgumentException();
-        }
-    }
 }
