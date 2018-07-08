@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/delete/*").authenticated()
                 .antMatchers("/save/*").authenticated()
                 .antMatchers("/add/*").authenticated()
+                .antMatchers("/load/*").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin().permitAll()

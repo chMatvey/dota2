@@ -5,10 +5,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.pipDota2.domain.*;
 import ru.pipDota2.service.*;
+import ru.pipDota2.web.forms.Error;
+import ru.pipDota2.web.forms.Result;
+import ru.pipDota2.web.forms.Success;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -37,7 +42,14 @@ public class LoadDataToDBController {
     }
 
     @GetMapping("/load/heroes")
-    public String loadHeroesJson() throws IOException, ParseException {
+    public Result loadHeroesJson() throws IOException, ParseException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        org.springframework.security.core.userdetails.User user =
+                (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
+        if (!user.getAuthorities().contains(Role.ADMIN)){
+            return new Error("Недостаточно прав");
+        }
+
         attackService.saveAttack(Attack.of("melee"));
         attackService.saveAttack(Attack.of("range"));
         typeService.saveType(Type.of("/img/icon-str.png"));
@@ -58,14 +70,21 @@ public class LoadDataToDBController {
             heroes.add(hero);
         }
         if (heroService.saveHero(heroes)){
-            return "data was loaded successes";
+            return new Success<String>("Data was successfully loaded");
         } else {
-            return "error";
+            return new Error("db error");
         }
     }
 
     @GetMapping("/load/sections")
-    public String loadSectionsJson() throws IOException, ParseException {
+    public Result loadSectionsJson() throws IOException, ParseException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        org.springframework.security.core.userdetails.User user =
+                (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
+        if (!user.getAuthorities().contains(Role.ADMIN)){
+            return new Error("Недостаточно прав");
+        }
+
         String[] name = new String[]{ "consumables", "attributes", "armaments", "arcane", "common", "support", "caster", "weapons", "armor", "artifacts", "secret" };
         String[] img = new String[]{ "/img/icons/itemcat_consumables.png", "/img/icons/itemcat_attributes.png", "/img/icons/itemcat_armaments.png", "/img/icons/itemcat_arcane.png", "/img/icons/itemcat_common.png", "/img/icons/itemcat_support.png", "/img/icons/itemcat_caster.png", "/img/icons/itemcat_weapons.png", "/img/icons/itemcat_armor.png", "/img/icons/itemcat_artifacts.png", "/img/icons/itemcat_secret.png" };
         List<Section> sections = new ArrayList<>();
@@ -95,9 +114,9 @@ public class LoadDataToDBController {
             sections.add(section);
         }
         if (sectionService.saveSections(sections)){
-            return "data was loaded successes";
+            return new Success<String>("Data was successfully loaded");
         } else {
-            return "error";
+            return new Error("db error");
         }
     }
 
@@ -140,7 +159,13 @@ public class LoadDataToDBController {
     }
 
     @GetMapping("/load/characteristics")
-    public String loadCharacteristics() throws IOException, ParseException {
+    public Result loadCharacteristics() throws IOException, ParseException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        org.springframework.security.core.userdetails.User user =
+                (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
+        if (!user.getAuthorities().contains(Role.ADMIN)){
+            return new Error("Недостаточно прав");
+        }
 
         JSONParser parser = new JSONParser();
         JSONArray info = (JSONArray) parser.parse(new FileReader
@@ -166,7 +191,7 @@ public class LoadDataToDBController {
             JSONObject dataForInfo = (JSONObject)info.get(i);
             String name = (String)dataForInfo.get("name");
             if (!name.equals(nameHero)){
-                return "sort error";
+                return new Error("Sort data error");
             }
             boolean result;
             try{
@@ -220,9 +245,9 @@ public class LoadDataToDBController {
                 ));
             }
             if(!result){
-                return "error";
+                return new Error("db error");
             }
         }
-        return "data was loaded successes";
+        return new Success<String>("Data was successfully loaded");
     }
 }
