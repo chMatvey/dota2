@@ -14,7 +14,7 @@ class Hero extends Component {
         this.state = {
             limit: 10,
             offset: 0,
-            url: "http://localhost:8000/get/heroes?limit=",
+            url: "/get/heroes?limit=",
         };
         this.addHeroes = this.addHeroes.bind(this);
         this.handleScrollCallback = this.handleScrollCallback.bind(this);
@@ -57,19 +57,19 @@ class Hero extends Component {
 
     changeURL(){
         if (this.typeSelect.value === "Power"){
-            this.state.url = "http://localhost:8000/get/heroes/type?type_id=1&limit=";
+            this.state.url = "/get/heroes/type?type_id=1&limit=";
         } else if (this.typeSelect.value === "Agility") {
-            this.state.url = "http://localhost:8000/get/heroes/type?type_id=2&limit=";
+            this.state.url = "/get/heroes/type?type_id=2&limit=";
         } else if (this.typeSelect.value === "Intelligence"){
-            this.state.url = "http://localhost:8000/get/heroes/type?type_id=3&limit=";
+            this.state.url = "/get/heroes/type?type_id=3&limit=";
         } else {
-            this.state.url = "http://localhost:8000/get/heroes?limit=";
+            this.state.url = "/get/heroes?limit=";
         }
     }
 
     inputChange() {
         if (this.findInput.value !== ""){
-            this.state.url = "http://localhost:8000/get/heroes/like?name=" + this.findInput.value + "&limit=";
+            this.state.url = "/get/heroes/like?name=" + this.findInput.value + "&limit=";
         } else{
             this.changeURL();
         }

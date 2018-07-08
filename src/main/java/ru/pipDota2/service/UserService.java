@@ -61,4 +61,13 @@ public class UserService implements UserDetailsService{
     public Optional<User> getUserById(int id){
         return Optional.of(repository.findOne(id));
     }
+
+    public boolean createNewUser(String username, String password){
+        if(findUserByName(username).isPresent()){
+            return false;
+        } else {
+            repository.save(User.of(username, new BCryptPasswordEncoder().encode(password), Role.USER));
+            return true;
+        }
+    }
 }

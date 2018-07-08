@@ -10,7 +10,7 @@ class Characteristic extends Component{
     constructor(props){
         super(props);
         this.state = {
-            url: "http://localhost:8000/get/characteristic?hero_id=",
+            url: "/get/characteristic?hero_id=",
             id: 0,
             isAuth: false,
             isAdmin: false,
@@ -42,14 +42,14 @@ class Characteristic extends Component{
 
     sendComment(){
         $.ajax({
-            url: ("http://localhost:8000/add/comment?charact_id=" + this.state.id + "&content=" + this.comment.value),
+            url: ("/add/comment?charact_id=" + this.state.id + "&content=" + this.comment.value),
             dataType: 'json',
             cache: false,
             success: function (data) {
                 this.props.onAddCharacteristic(data);
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error("http://localhost:8000/add/comment?charact_id=" + this.state.id + "&content=" + this.comment.value, status, err.toString());
+                console.error("/add/comment?charact_id=" + this.state.id + "&content=" + this.comment.value, status, err.toString());
             }.bind(this)
         });
         this.comment.value = "";
@@ -64,7 +64,7 @@ class Characteristic extends Component{
 
     deleteComment(id){
         $.ajax({
-            url: ("http://localhost:8000/delete/comment?comment_id=" + id),
+            url: ("/delete/comment?comment_id=" + id),
             dataType: 'json',
             cache: false,
             success: function (data) {

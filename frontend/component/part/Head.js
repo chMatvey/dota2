@@ -8,21 +8,16 @@ class Head extends Component{
         super(props);
         this.state = {
             dataUpdate: props.dataUpdate,
-            url: "http://localhost:8000/get/user",
+            url: "/get/user",
             isAuth: false,
             isAdmin: false,
             login: "",
         };
-        this.logout = this.logout.bind(this);
         this.isAuthenticated = this.isAuthenticated.bind(this);
     }
 
     componentDidMount(){
         this.isAuthenticated()
-    }
-
-    logout(){
-
     }
 
     isAuthenticated(){
@@ -70,7 +65,7 @@ class Head extends Component{
                     <li><Link to="/articles">Articles</Link></li>
                     <li hidden={this.state.isAuth}><Link to="/signIn">Sign in</Link></li>
                     <li hidden={this.state.isAuth}><Link to="/signUp">Sign up</Link></li>
-                    <li hidden={!this.state.isAuth}><Link onClick={this.logout()} to="#">Logout</Link></li>
+                    <li hidden={!this.state.isAuth}><a href="/logout">Logout</a></li>
                     <li hidden={!this.state.isAuth}><Link>{this.state.login}</Link></li>
                     <li className="last-child"><h1><Link to="/">
                         <img src="http://wallpaperstock.ru/tmp/D/16295_5.jpg"/>

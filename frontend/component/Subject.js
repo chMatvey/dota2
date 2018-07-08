@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import Head from './part/Head';
 import './css/subject.css'
-import sections from "../reducer/section";
 import $ from "jquery";
 
 const urlData = "https://dota2.ru/";
@@ -12,7 +11,7 @@ class Subject extends Component{
     constructor(){
         super();
         this.state = {
-            url: "http://localhost:8000/get/sections",
+            url: "/get/sections",
         };
         this.addSection = this.addSection.bind(this);
     }

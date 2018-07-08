@@ -43,13 +43,13 @@ public class ArticleController {
     public Result deleteArticle(@RequestParam("article_id") int articleId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         try {
-//            org.springframework.security.core.userdetails.User user =
-//                    (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
-//
-//            String username = user.getUsername();
+            org.springframework.security.core.userdetails.User user =
+                    (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
+
+            String username = user.getUsername();
             if (articleService.deleteArticleByUser(articleId,
-                    userService.findUserByName("user").orElseThrow(() ->
-                    new UsernameNotFoundException("user " + "user" + " was not found")))){
+                    userService.findUserByName(username).orElseThrow(() ->
+                    new UsernameNotFoundException("user " + username + " was not found")))){
 
                 return new Success<String>("Success");
             } else {
@@ -64,14 +64,14 @@ public class ArticleController {
     public Result SaveArticle(@RequestParam("title")String title,
                                @RequestParam("content")String content){
         try {
-//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//            org.springframework.security.core.userdetails.User user =
-//                    (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
-//            String username = user.getUsername();
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            org.springframework.security.core.userdetails.User user =
+                    (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
+            String username = user.getUsername();
 
             if(articleService.saveArticle(title, content,
-                    userService.findUserByName("user").orElseThrow(() ->
-                            new UsernameNotFoundException("user " + "user" + " was not found")))){
+                    userService.findUserByName(username).orElseThrow(() ->
+                            new UsernameNotFoundException("user " + username + " was not found")))){
                 return new Success<String>("Article was successfully loaded");
             } else{
                 return new Error("Article wasn't loaded");

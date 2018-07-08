@@ -32,14 +32,18 @@ public class ArticleServiceImpl implements ArticleService {
         if (article == null){
             return false;
         }
-        if (article.getUser().getId() != user.getId()) {
-            return false;
-        } else {
-            article.setUser(null);
-            repository.save(article);
-            repository.delete(id);
-            return true;
-        }
+//        if (article.getUser().getId() != user.getId()) {
+//            return false;
+//        } else {
+//            article.setUser(null);
+//            repository.save(article);
+//            repository.delete(id);
+//            return true;
+//        }
+        article.setUser(null);
+        repository.save(article);
+        repository.delete(id);
+        return true;
     }
 
     @Override

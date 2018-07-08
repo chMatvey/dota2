@@ -10,7 +10,7 @@ class Mem extends Component {
     constructor(props){
         super(props);
         this.state = {
-            url: "http://localhost:8000/get/memes",
+            url: "/get/memes",
             countLike: 1,
             isAdmin: false,
             liked: false

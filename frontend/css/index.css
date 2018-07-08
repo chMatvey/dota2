@@ -33,3 +33,9 @@ ul, li{
         visibility: hidden;
     }
 }
+
+.alert-message{
+    width: 60%;
+    margin: 0 auto;
+}
+

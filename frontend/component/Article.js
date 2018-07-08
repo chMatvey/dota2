@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Head from './part/Head'
 import {connect} from 'react-redux';
 import './css/hero.css';
-import {Link} from 'react-router';
 import $ from 'jquery';
 import ScrollEvent from 'react-onscroll';
 import "./css/article.css"
@@ -14,7 +13,9 @@ class Article extends Component {
             limit: 10,
             offset: 0,
             isAdmin: false,
-            url: "http://localhost:8000/get/articles?limit=",
+            url: "/get/articles?limit=",
+            isArticleAddHidden: true,
+            isArticleDeleteHidden: true,
         };
         this.deleteArticle = this.deleteArticle.bind(this);
     }
@@ -51,15 +52,20 @@ class Article extends Component {
 
     sendArticle() {
         $.ajax({
-            url: ("http://localhost:8000/save/article?title=" + this.article.value + "&content=" + this.article.value),
+            url: ("/save/article?title=" + this.article.value + "&content=" + this.article.value),
             dataType: 'json',
             cache: false,
             success: function (data) {
-                alert(data.value);
+                this.setState({
+                    isArticleAddHidden: false,
+                    isArticleDeleteHidden: true
+                });
                 this.getArticle();
+                this.article.value = "";
+                this.title.value = "";
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error("http://localhost:8000/save/article?title=" + this.article.value + "&content" + this.article.value, status, err.toString());
+                console.error("/save/article?title=" + this.article.value + "&content" + this.article.value, status, err.toString());
             }.bind(this)
         });
     }
@@ -73,7 +79,6 @@ class Article extends Component {
     }
 
     headUpdate(data){
-        console.log(data.isAdmin);
         this.setState({
             isAdmin: data.isAdmin
         });
@@ -81,18 +86,19 @@ class Article extends Component {
 
     deleteArticle(id){
         $.ajax({
-            url: ("http://localhost:8000/delete/article?article_id=" + id),
+            url: ("/delete/article?article_id=" + id),
             dataType: 'json',
             cache: false,
             success: function (data) {
-                alert(data.value);
                 this.setState({
-                    offset: 0
+                    offset: 0,
+                    isArticleAddHidden: true,
+                    isArticleDeleteHidden: false,
                 });
                 this.props.onDeleteArticle();
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error("http://localhost:8000/delete/article" + id, status, err.toString());
+                console.error("/delete/article" + id, status, err.toString());
             }.bind(this)
         });
     }
@@ -101,11 +107,24 @@ class Article extends Component {
         return (
             <div>
                 <Head dataUpdate={this.headUpdate.bind(this)}/>
+                <div hidden={this.state.isArticleAddHidden} className="alert alert-dismissible alert-success alert-message">
+                    <button type="button" className="close" data-dismiss="alert" onClick={() => {
+                        this.setState({isArticleAddHidden: true})
+                    }}>&times;</button>
+                    <strong>Well done!</strong> Your article was successfully loaded
+                </div>
+                <div hidden={this.state.isArticleDeleteHidden} className="alert alert-dismissible alert-secondary alert-message">
+                    <button type="button" className="close" data-dismiss="alert" onClick={() => {
+                        this.setState({isArticleDeleteHidden: true})
+                    }}>&times;</button>
+                    <strong>OK!</strong> Your article was successfully deleted
+                </div>
                 <ScrollEvent handleScrollCallback={this.handleScrollCallback.bind(this)}/>
                 <div className="jumbotron content-table">
                     <div className="charact-comment article-comment" hidden={!this.state.isAdmin}>
                         <legend align="center">Создайте новую статью</legend>
-                        <input className="input-group-text article-title" placeholder="Заголовок статьи"/>
+                        <input className="input-group-text article-title" placeholder="Заголовок статьи"
+                               ref={(input) => {this.title = input}}/>
                         <textarea className="input-group-text" placeholder="Содержимое статьи"
                                   ref={(textarea) => {this.article = textarea;}}/>
                         <button className="btn btn-primary" onClick={this.sendArticle.bind(this)}>Отправить</button>

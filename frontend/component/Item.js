@@ -10,7 +10,7 @@ class Item extends Component {
     constructor(){
         super();
         this.state = {
-            url: "http://localhost:8000/get/item/?id=",
+            url: "/get/item/?id=",
         };
         this.addItem = this.addItem.bind(this);
     }
