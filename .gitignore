@@ -32,3 +32,6 @@ hs_err_pid*
 #npm
 /node_modules
 /package-lock.json
+
+#front-build
+/src/main/resources/static/build
