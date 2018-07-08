@@ -16,6 +16,8 @@ class Article extends Component {
             url: "/get/articles?limit=",
             isArticleAddHidden: true,
             isArticleDeleteHidden: true,
+            isArticleBad: true,
+            messageBad: "",
         };
         this.deleteArticle = this.deleteArticle.bind(this);
     }
@@ -51,23 +53,45 @@ class Article extends Component {
     }
 
     sendArticle() {
-        $.ajax({
-            url: ("/save/article?title=" + this.article.value + "&content=" + this.article.value),
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                this.setState({
-                    isArticleAddHidden: false,
-                    isArticleDeleteHidden: true
-                });
-                this.getArticle();
-                this.article.value = "";
-                this.title.value = "";
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error("/save/article?title=" + this.article.value + "&content" + this.article.value, status, err.toString());
-            }.bind(this)
-        });
+        let doRequest = true;
+        if(this.title.value.length > 15){
+            this.setState({
+                isArticleAddHidden: true,
+                isArticleDeleteHidden: true,
+                isArticleBad: false,
+                messageBad: "Длина заголовка не должна превышать 15 символов",
+            });
+            doRequest = false;
+        }
+        if(this.article.value.length > 250){
+            this.setState({
+                isArticleAddHidden: true,
+                isArticleDeleteHidden: true,
+                isArticleBad: false,
+                messageBad: "Длина статьи не должна превышать 15 символов",
+            });
+            doRequest = false;
+        }
+
+        if(doRequest){
+            $.ajax({
+                url: ("/save/article?title=" + this.title.value + "&content=" + this.article.value),
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+                    this.setState({
+                        isArticleAddHidden: false,
+                        isArticleDeleteHidden: true
+                    });
+                    this.getArticle();
+                    this.article.value = "";
+                    this.title.value = "";
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.error("/save/article?title=" + this.article.value + "&content" + this.article.value, status, err.toString());
+                }.bind(this)
+            });
+        }
     }
 
     handleScrollCallback(){
@@ -118,6 +142,12 @@ class Article extends Component {
                         this.setState({isArticleDeleteHidden: true})
                     }}>&times;</button>
                     <strong>OK!</strong> Your article was successfully deleted
+                </div>
+                <div hidden={this.state.isArticleBad} className="alert alert-dismissible alert-danger alert-message">
+                    <button type="button" className="close" data-dismiss="alert" onClick={() => {
+                        this.setState({isArticleBad: true})
+                    }}>&times;</button>
+                    <strong>{this.state.messageBad}</strong>
                 </div>
                 <ScrollEvent handleScrollCallback={this.handleScrollCallback.bind(this)}/>
                 <div className="jumbotron content-table">
