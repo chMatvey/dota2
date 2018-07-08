@@ -57,7 +57,7 @@ class Head extends Component{
         return(
             <div className="main-header">
                 <ul className="dark-header">
-                    <li><h1><Link to="/">
+                    <li className="first-child"><h1><Link to="/">
                         <img src="http://wallpaperstock.ru/tmp/D/16295_5.jpg"/>
                     </Link></h1></li>
                     <li><Link to="/heroes">Heroes</Link></li>

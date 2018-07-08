@@ -51,7 +51,7 @@ class Subject extends Component{
                     </h3>
                 </div>
                 <div className="content-table jumbotron content-subject">
-                    <table className="table table-hover">
+                    <table className="table table-hover items-content">
                         <thead>
                             {this.props.sections.map((section) =>
                             <th><img title={section.name} src={urlData + section.img}/></th>)}

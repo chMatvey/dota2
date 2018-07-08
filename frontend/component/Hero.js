@@ -119,9 +119,9 @@ class Hero extends Component {
                         <tr>
                             <th scope="col"/>
                             <th scope="col">Name</th>
-                            <th className="hidden-1217" scope="col">Role</th>
-                            <th className="hidden-1217" scope="col">Attack</th>
-                            <th className="hidden-1217" scope="col"/>
+                            <th className="hidden-1217 hidden-828" scope="col">Role</th>
+                            <th className="hidden-828" scope="col">Attack</th>
+                            <th scope="col"/>
                         </tr>
                         </thead>
                         <tbody className="table-active">
@@ -130,11 +130,11 @@ class Hero extends Component {
                                 <th><Link to={"/hero/" + hero.id}>
                                     <img className="hero-image" src={urlData + hero.img}/>
                                 </Link></th>
-                                <th><Link to={"/hero/" + hero.id}
-                                          class="hero-name">{hero.name}</Link></th>
-                                <th className="hidden-1217"><span className="span-right">{hero.role}</span></th>
-                                <th className="hidden-1217"><span className="span-right">{hero.attack.name}</span></th>
-                                <th className="hidden-1217"><img className="hero-type-img" src={urlData + hero.type.img}/></th>
+                                <th ><Link to={"/hero/" + hero.id}
+                                           class="hero-name">{hero.name}</Link></th>
+                                <th className="hidden-1217 hidden-828"><span className="span-right">{hero.role}</span></th>
+                                <th className="hidden-828"><span className="span-right">{hero.attack.name}</span></th>
+                                <th><img className="hero-type-img" src={urlData + hero.type.img}/></th>
                             </tr>
                         )}
                         </tbody>

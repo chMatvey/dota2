@@ -29,6 +29,9 @@
     .dark-header img {
         width: 90px;
     }
+    .last-child{
+        display: none;
+    }
 }
 @media (max-width: 828px){
     .dark-header li{
@@ -43,7 +46,10 @@
         margin-left: -20px;
         margin-top: -5px;
     }
-    .dark-header .last-child{
-        visibility: hidden;
+    .last-child{
+        display: none;
+    }
+    .first-child{
+        display: none;
     }
 }

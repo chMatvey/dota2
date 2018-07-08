@@ -1,16 +1,16 @@
 package ru.pipDota2.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.pipDota2.domain.Characteristic;
 import ru.pipDota2.domain.Comment;
-import ru.pipDota2.repository.CommentRepository;
+import ru.pipDota2.domain.Role;
 import ru.pipDota2.service.CharacteristicServiceImpl;
 import ru.pipDota2.service.CommentServiceImpl;
 import ru.pipDota2.service.HeroServiceImpl;
@@ -60,11 +60,23 @@ public class CharacteristicController {
     }
 
     @GetMapping("/delete/comment")
+    @PreAuthorize("hasRole('ADMIN')")
     public Result deleteCommentToCharacteristic(@RequestParam("comment_id") int commentId){
-        if (commentService.deleteComment(commentId)){
-            return new Success<String>("This comment was successfully deleted");
-        } else {
-            return new Error("Comment with id: " + commentId + " doesn't exist");
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            org.springframework.security.core.userdetails.User user =
+                    (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
+            if (!user.getAuthorities().contains(Role.ADMIN)){
+                return new Error("Недостаточно прав");
+            }
+
+            if (commentService.deleteComment(commentId)){
+                return new Success<String>("This comment was successfully deleted");
+            } else {
+                return new Error("Comment with id: " + commentId + " doesn't exist");
+            }
+        } catch (Exception e){
+            return new Error(e.getMessage());
         }
     }
 }

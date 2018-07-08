@@ -3,6 +3,7 @@ package ru.pipDota2.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +26,8 @@ public class MemController {
         this.userService = userService;
     }
 
-    @RequestMapping("/load/mem")
+    @RequestMapping("/add/mem")
+    @PreAuthorize("hasRole('ADMIN')")
     public Mem loadMem(@RequestParam("user_id") int userId, @RequestParam("file") MultipartFile file) throws IOException {
         return memService.saveMem(Mem.of(file.getBytes(),
                 userService.getUserById(userId).orElseThrow(() ->

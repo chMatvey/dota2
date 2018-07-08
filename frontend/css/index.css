@@ -24,13 +24,13 @@ ul, li{
 
 @media (max-width: 1217px) and (min-width: 828px) {
     .hidden-1217 {
-        visibility: hidden;
+        display: none;
     }
 }
 
 @media (max-width: 828px) {
-    .hidden-1217 {
-        visibility: hidden;
+    .hidden-828 {
+        display: none;
     }
 }
 
