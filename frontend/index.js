@@ -26,7 +26,7 @@ ReactDOM.render(
                 <Route exact path = "/heroes" component={Hero}/>
                 <Route exact path = "/items" component={Subject}/>
                 <Route exact path = "/articles" component={Article}/>
-                <Route exact path = "/hero/:id" component={Characteristic}/>
+                <Route exact path = "/heroes/:id" component={Characteristic}/>
                 <Route exact path = "/items/:id" component={Item}/>
                 <Route exact path = "/signIn" component={SignIn}/>
                 <Route exact path = "/signUp" component={SignUp}/>

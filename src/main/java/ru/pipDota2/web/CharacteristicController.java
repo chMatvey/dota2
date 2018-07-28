@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.pipDota2.domain.Characteristic;
 import ru.pipDota2.domain.Comment;
 import ru.pipDota2.domain.Role;
-import ru.pipDota2.service.CharacteristicServiceImpl;
-import ru.pipDota2.service.CommentServiceImpl;
-import ru.pipDota2.service.HeroServiceImpl;
+import ru.pipDota2.service.CharacteristicService;
+import ru.pipDota2.service.CommentService;
+import ru.pipDota2.service.HeroService;
 import ru.pipDota2.service.UserService;
 import ru.pipDota2.web.forms.Error;
 import ru.pipDota2.web.forms.Result;
@@ -21,15 +21,15 @@ import ru.pipDota2.web.forms.Success;
 
 @RestController
 public class CharacteristicController {
-    private final CharacteristicServiceImpl characteristicService;
-    private final HeroServiceImpl heroService;
-    private final CommentServiceImpl commentService;
+    private final CharacteristicService characteristicService;
+    private final HeroService heroService;
+    private final CommentService commentService;
     private final UserService userService;
 
     @Autowired
-    public CharacteristicController(final CharacteristicServiceImpl characteristicService,
-                                    final HeroServiceImpl heroService,
-                                    final CommentServiceImpl commentService,
+    public CharacteristicController(final CharacteristicService characteristicService,
+                                    final HeroService heroService,
+                                    final CommentService commentService,
                                     final UserService userService){
         this.characteristicService = characteristicService;
         this.heroService = heroService;

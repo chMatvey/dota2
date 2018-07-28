@@ -58,7 +58,7 @@ class Head extends Component{
             <div className="main-header">
                 <ul className="dark-header">
                     <li className="first-child"><h1><Link to="/">
-                        <img src="http://wallpaperstock.ru/tmp/D/16295_5.jpg"/>
+                        <img src="/img/logo.jpg"/>
                     </Link></h1></li>
                     <li><Link to="/heroes">Heroes</Link></li>
                     <li><Link to="/items">Items</Link></li>
@@ -68,7 +68,7 @@ class Head extends Component{
                     <li hidden={!this.state.isAuth}><a href="/logout">Logout</a></li>
                     <li hidden={!this.state.isAuth}><Link>{this.state.login}</Link></li>
                     <li className="last-child"><h1><Link to="/">
-                        <img src="http://wallpaperstock.ru/tmp/D/16295_5.jpg"/>
+                        <img src="/img/logo.jpg"/>
                     </Link></h1></li>
                 </ul>
             </div>

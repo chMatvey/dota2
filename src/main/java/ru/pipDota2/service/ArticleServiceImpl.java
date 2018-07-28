@@ -28,21 +28,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public boolean deleteArticleByUser(int id, User user) {
-        Article article = repository.findOne(id);
+        Article article = repository.findById(id).orElse(null);
         if (article == null){
             return false;
         }
-//        if (article.getUser().getId() != user.getId()) {
-//            return false;
-//        } else {
-//            article.setUser(null);
-//            repository.save(article);
-//            repository.delete(id);
-//            return true;
-//        }
         article.setUser(null);
         repository.save(article);
-        repository.delete(id);
+        repository.deleteById(id);
         return true;
     }
 

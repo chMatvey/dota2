@@ -5,14 +5,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.pipDota2.domain.Hero;
-import ru.pipDota2.service.HeroServiceImpl;
+import ru.pipDota2.service.HeroService;
 
 @RestController
 public class HeroController {
-    private final HeroServiceImpl heroService;
+    private final HeroService heroService;
 
     @Autowired
-    public HeroController(final HeroServiceImpl heroService){
+    public HeroController(final HeroService heroService){
         this.heroService = heroService;
     }
 

@@ -2,6 +2,8 @@ package ru.pipDota2.service;
 
 import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import ru.pipDota2.domain.Role;
 import ru.pipDota2.domain.User;
 import ru.pipDota2.repository.UserRepository;
+import ru.pipDota2.web.forms.Error;
 
 import javax.annotation.PostConstruct;
 import javax.jws.soap.SOAPBinding;
@@ -59,7 +62,7 @@ public class UserService implements UserDetailsService{
     }
 
     public Optional<User> getUserById(int id){
-        return Optional.of(repository.findOne(id));
+        return (repository.findById(id));
     }
 
     public boolean createNewUser(String username, String password){
@@ -69,5 +72,15 @@ public class UserService implements UserDetailsService{
             repository.save(User.of(username, new BCryptPasswordEncoder().encode(password), Role.USER));
             return true;
         }
+    }
+
+    public String checkAdmin() throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        org.springframework.security.core.userdetails.User user =
+                (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
+        if (!user.getAuthorities().contains(Role.ADMIN)){
+            throw new Exception("Недостаточно прав!");
+        }
+        return user.getUsername();
     }
 }

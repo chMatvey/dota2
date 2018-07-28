@@ -17,8 +17,8 @@ public class SectionServiceImpl implements SectionService {
     }
 
     @Override
-    public boolean saveSections(Iterable<Section> sections) {
-        return repository.save(sections) != null;
+    public Iterable<Section> saveSections(Iterable<Section> sections) {
+        return repository.saveAll(sections);
     }
 
     @Override

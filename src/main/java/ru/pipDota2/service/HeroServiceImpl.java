@@ -18,8 +18,8 @@ public class HeroServiceImpl implements HeroService{
     }
 
     @Override
-    public boolean saveHero(Iterable<Hero> heroes){
-        return repository.save(heroes) != null;
+    public Iterable<Hero> saveHero(Iterable<Hero> heroes){
+        return repository.saveAll(heroes);
     }
 
     @Override
@@ -39,6 +39,6 @@ public class HeroServiceImpl implements HeroService{
 
     @Override
     public Hero getHeroById(int id) {
-        return repository.findOne(id);
+        return repository.findById(id).orElse(null);
     }
 }

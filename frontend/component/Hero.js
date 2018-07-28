@@ -127,10 +127,10 @@ class Hero extends Component {
                         <tbody className="table-active">
                         {this.props.heroes.map((hero) =>
                             <tr key={hero.id}>
-                                <th><Link to={"/hero/" + hero.id}>
+                                <th><Link to={"/heroes/" + hero.id}>
                                     <img className="hero-image" src={urlData + hero.img}/>
                                 </Link></th>
-                                <th ><Link to={"/hero/" + hero.id}
+                                <th ><Link to={"/heroes/" + hero.id}
                                            class="hero-name">{hero.name}</Link></th>
                                 <th className="hidden-1217 hidden-828"><span className="span-right">{hero.role}</span></th>
                                 <th className="hidden-828"><span className="span-right">{hero.attack.name}</span></th>

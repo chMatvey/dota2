@@ -15,30 +15,17 @@ public class TypeServiceImpl implements TypeService{
     }
 
     @Override
-    public boolean saveType(Type type) {
-        return repository.save(type) != null;
-    }
-
-    @Override
     public Type getTypeById(int id) {
-        return repository.findOne(id);
+        return repository.findById(id).orElse(null);
     }
 
     @Override
     public Type getTypeByImg(String img) {
-        return repository.findFirstByImg(img);
+        return repository.findFirstByImg(img).orElse(null);
     }
 
     @Override
-    public int getTypeId(String name) {
-        if (name.equals("/img/icon-str.png")){
-            return 1;
-        } else if (name.equals("/img/icon-agi.png")){
-            return 2;
-        } else if (name.equals("/img/icon-int.png")){
-            return 3;
-        } else {
-            throw new IllegalArgumentException();
-        }
+    public Type saveType(Type type) {
+        return repository.save(type);
     }
 }

@@ -26,6 +26,6 @@ public class MemServiceImpl implements MemService {
 
     @Override
     public Mem getMemById(int id) {
-        return repository.findOne(id);
+        return repository.findById(id).orElse(null);
     }
 }

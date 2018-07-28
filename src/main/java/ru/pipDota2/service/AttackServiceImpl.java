@@ -15,17 +15,17 @@ public class AttackServiceImpl implements AttackService {
     }
 
     @Override
-    public boolean saveAttack(Attack attack) {
-        return repository.save(attack) != null;
+    public Attack saveAttack(Attack attack) {
+        return repository.save(attack);
     }
 
     @Override
     public Attack getAttackById(int id) {
-        return repository.findOne(id);
+        return repository.findById(id).orElse(null);
     }
 
     @Override
     public Attack getAttackByName(String name) {
-        return repository.findFirstByName(name);
+        return repository.findFirstByName(name).orElse(null);
     }
 }

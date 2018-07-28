@@ -5,14 +5,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.pipDota2.domain.Subject;
-import ru.pipDota2.service.SubjectServiceImpl;
+import ru.pipDota2.service.SubjectService;
 
 @RestController
 public class SubjectController {
-    private final SubjectServiceImpl subjectService;
+    private final SubjectService subjectService;
 
     @Autowired
-    public SubjectController(final SubjectServiceImpl subjectService){
+    public SubjectController(final SubjectService subjectService){
         this.subjectService = subjectService;
     }
 

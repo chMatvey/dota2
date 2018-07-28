@@ -17,17 +17,17 @@ public class CharacteristicServiceImpl implements CharacteristicService {
     }
 
     @Override
-    public boolean saveCharacteristics(Characteristic characteristics) {
-        return repository.save(characteristics) != null;
+    public Characteristic saveCharacteristics(Characteristic characteristics) {
+        return repository.save(characteristics);
     }
 
     @Override
     public Characteristic getByHero(Hero hero) {
-        return repository.findFirstByHeroEquals(hero);
+        return repository.findFirstByHeroEquals(hero).orElse(null);
     }
 
     @Override
     public Characteristic getById(int id) {
-        return repository.findOne(id);
+        return repository.findById(id).orElse(null);
     }
 }

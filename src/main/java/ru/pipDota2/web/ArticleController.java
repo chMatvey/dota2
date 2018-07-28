@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.pipDota2.domain.Article;
 import ru.pipDota2.domain.Role;
-import ru.pipDota2.service.ArticleServiceImpl;
+import ru.pipDota2.service.ArticleService;
 import ru.pipDota2.service.UserService;
 import ru.pipDota2.web.forms.Error;
 import ru.pipDota2.web.forms.Result;
@@ -18,11 +18,11 @@ import ru.pipDota2.web.forms.Success;
 
 @RestController
 public class ArticleController {
-    private final ArticleServiceImpl articleService;
+    private final ArticleService articleService;
     private final UserService userService;
 
     @Autowired
-    public  ArticleController(final  ArticleServiceImpl articleService,
+    public  ArticleController(final  ArticleService articleService,
                               final UserService userService){
         this.articleService = articleService;
         this.userService = userService;
@@ -71,14 +71,7 @@ public class ArticleController {
     public Result SaveArticle(@RequestParam("title")String title,
                                @RequestParam("content")String content){
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            org.springframework.security.core.userdetails.User user =
-                    (org.springframework.security.core.userdetails.User)authentication.getPrincipal();
-            if (!user.getAuthorities().contains(Role.ADMIN)){
-                return new Error("Недостаточно прав");
-            }
-
-            String username = user.getUsername();
+            String username = userService.checkAdmin();
             if(articleService.saveArticle(title, content,
                     userService.findUserByName(username).orElseThrow(() ->
                             new UsernameNotFoundException("user " + username + " was not found")))){

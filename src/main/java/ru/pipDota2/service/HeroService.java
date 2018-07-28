@@ -6,7 +6,7 @@ import ru.pipDota2.domain.Type;
 import java.util.List;
 
 public interface HeroService {
-    public boolean saveHero(Iterable<Hero> heroes);
+    public Iterable<Hero> saveHero(Iterable<Hero> heroes);
 
     public Iterable<Hero> getHeroesLimitOffset(int limit, int offset);
 

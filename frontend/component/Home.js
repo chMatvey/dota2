@@ -9,7 +9,7 @@ class Home extends Component{
                 <Head/>
                 <div className="home-content">
                     <legend align="center"><h1 className="home-title">DOTA 2</h1></legend>
-                    <iframe src="http://www.youtube.com/embed/-cSFPIwMEq4?rel=0&hd=1" className="home-iframe"/>
+                    <iframe src="https://www.youtube.com/embed/-cSFPIwMEq4?rel=0&hd=1" className="home-iframe"/>
                 </div>
             </div>
         )

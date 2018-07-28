@@ -5,7 +5,7 @@ import ru.pipDota2.domain.Comment;
 import ru.pipDota2.domain.Hero;
 
 public interface CharacteristicService {
-    public boolean saveCharacteristics(Characteristic characteristics);
+    public Characteristic saveCharacteristics(Characteristic characteristics);
 
     public Characteristic getByHero(Hero hero);
 

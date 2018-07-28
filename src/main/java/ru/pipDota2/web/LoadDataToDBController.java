@@ -22,18 +22,18 @@ import java.util.List;
 
 @RestController
 public class LoadDataToDBController {
-    private final HeroServiceImpl heroService;
-    private final AttackServiceImpl attackService;
-    private final TypeServiceImpl typeService;
-    private final SectionServiceImpl sectionService;
-    private final CharacteristicServiceImpl characteristicService;
+    private final HeroService heroService;
+    private final AttackService attackService;
+    private final TypeService typeService;
+    private final SectionService sectionService;
+    private final CharacteristicService characteristicService;
 
     @Autowired
-    public LoadDataToDBController(final HeroServiceImpl heroService,
-                                  final AttackServiceImpl attackService,
-                                  final TypeServiceImpl typeService,
-                                  final SectionServiceImpl sectionService,
-                                  final CharacteristicServiceImpl characteristicService){
+    public LoadDataToDBController(final HeroService heroService,
+                                  final AttackService attackService,
+                                  final TypeService typeService,
+                                  final SectionService sectionService,
+                                  final CharacteristicService characteristicService){
         this.heroService = heroService;
         this.attackService = attackService;
         this.typeService = typeService;
@@ -69,7 +69,7 @@ public class LoadDataToDBController {
                     typeService.getTypeByImg((String)data.get("type")));
             heroes.add(hero);
         }
-        if (heroService.saveHero(heroes)){
+        if (heroService.saveHero(heroes) != null){
             return new Success<String>("Data was successfully loaded");
         } else {
             return new Error("db error");
@@ -99,7 +99,7 @@ public class LoadDataToDBController {
                 try {
                     description = (String)data.get("use");
                     if (description.length() < 5)
-                        description = "Предмет";
+                        throw new Exception();
                 } catch (Exception e){
                     description = "Предмет";
                 }
@@ -113,7 +113,7 @@ public class LoadDataToDBController {
             }
             sections.add(section);
         }
-        if (sectionService.saveSections(sections)){
+        if (sectionService.saveSections(sections) != null){
             return new Success<String>("Data was successfully loaded");
         } else {
             return new Error("db error");
@@ -172,7 +172,6 @@ public class LoadDataToDBController {
                 ("E:\\project\\java\\couseworks\\dataForDota2\\info.json"));
         JSONArray stats = (JSONArray) parser.parse(new FileReader
                 ("E:\\project\\java\\couseworks\\dataForDota2\\stats.json"));
-        //List<Characteristic> characteristics = new ArrayList<>();
 
         for (int i = 0; i < info.size(); i++) {
             JSONObject dataForStat = (JSONObject)stats.get(i);
@@ -193,9 +192,9 @@ public class LoadDataToDBController {
             if (!name.equals(nameHero)){
                 return new Error("Sort data error");
             }
-            boolean result;
+            Characteristic characteristic;
             try{
-                result = characteristicService.saveCharacteristics(Characteristic.of(
+                characteristic = characteristicService.saveCharacteristics(Characteristic.of(
                         (String)dataForInfo.get("img"),
                         (String)dataForInfo.get("bio"),
                         (String)dataForInfo.get("video"),
@@ -225,7 +224,7 @@ public class LoadDataToDBController {
                         (String)dataForStat.get("vision"),
                         (String)dataForStat.get("distanceAttack")
                 );
-                result = characteristicService.saveCharacteristics(Characteristic.of(
+                characteristic = characteristicService.saveCharacteristics(Characteristic.of(
                         (String)dataForInfo.get("img"),
                         "bio",
                         (String)dataForInfo.get("video"),
@@ -244,7 +243,7 @@ public class LoadDataToDBController {
                         heroService.getHeroById(i+1)
                 ));
             }
-            if(!result){
+            if(characteristic == null){
                 return new Error("db error");
             }
         }

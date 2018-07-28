@@ -16,6 +16,6 @@ public class SubjectServiceImpl implements SubjectService{
 
     @Override
     public Subject getSubjectById(int id) {
-        return repository.findOne(id);
+        return repository.findById(id).orElse(null);
     }
 }

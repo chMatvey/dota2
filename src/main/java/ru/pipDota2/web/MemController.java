@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import ru.pipDota2.domain.Mem;
-import ru.pipDota2.service.MemServiceImpl;
+import ru.pipDota2.service.MemService;
 import ru.pipDota2.service.UserService;
 
 import java.io.IOException;
 
 @RestController
 public class MemController {
-    private final MemServiceImpl memService;
+    private final MemService memService;
     private final UserService userService;
 
     @Autowired
-    public MemController(final MemServiceImpl memService, final UserService userService){
+    public MemController(final MemService memService, final UserService userService){
         this.memService = memService;
         this.userService = userService;
     }

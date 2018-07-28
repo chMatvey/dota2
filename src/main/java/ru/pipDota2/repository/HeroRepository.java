@@ -15,6 +15,6 @@ public interface HeroRepository extends CrudRepository<Hero, Integer>{
             "WHERE heroes.type_id = ?1 LIMIT ?2 OFFSET ?3", nativeQuery = true)
     Iterable<Hero> findAllByType(int typeId, int limit, int offset);
 
-    @Query(value = "SELECT * FROM heroes WHERE NAME LIKE ?1 LIMIT ?2 OFFSET ?3", nativeQuery = true)
+    @Query(value = "SELECT * FROM heroes WHERE NAME COLLATE UTF8_GENERAL_CI LIKE ?1 LIMIT ?2 OFFSET ?3", nativeQuery = true)
     Iterable<Hero> findAllByNameLike(String name, int limit, int offset);
 }

@@ -7,5 +7,5 @@ public interface CommentService{
 
     Comment findById(int id);
 
-    boolean saveComment(Comment comment);
+    Comment saveComment(Comment comment);
 }

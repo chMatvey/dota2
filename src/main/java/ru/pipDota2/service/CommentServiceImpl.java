@@ -16,25 +16,23 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean deleteComment(int id) {
-        Comment comment = repository.findOne(id);
-        if (comment != null){
-            comment.setUser(null);
-            repository.save(comment);
-            repository.delete(id);
-            return true;
-        }
-        else {
+        Comment comment = repository.findById(id).orElse(null);
+        if (comment == null){
             return false;
         }
+        comment.setUser(null);
+        repository.save(comment);
+        repository.deleteById(id);
+        return true;
     }
 
     @Override
     public Comment findById(int id) {
-        return repository.findOne(id);
+        return repository.findById(id).orElse(null);
     }
 
     @Override
-    public boolean saveComment(Comment comment) {
-        return repository.save(comment) != null;
+    public Comment saveComment(Comment comment) {
+        return repository.save(comment);
     }
 }
